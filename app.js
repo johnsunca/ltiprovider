@@ -18,11 +18,12 @@ app.use(bodyParser.json());
 
 app.set('view engine', 'pug');
 
-app.post('/launch_lti', function(req, res, next){
+app.post('/', function(req, res, next){
 	
 //app.use('/', express.static(__dirname + '/www')); 
-res.sendFile(path.join(__dirname + '/www/index.html'));
+//res.sendFile(path.join(__dirname + '/www/index.html'));
 
+res.sendFile(express.static(__dirname + '/www/index.html'));
 					
 /*  req.body = _.omit(req.body, '__proto__');
   	if (req.body['oauth_consumer_key']===ltiKey){
