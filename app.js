@@ -27,8 +27,9 @@ app.post('/launch_lti', function(req, res, next){
   			provider.valid_request(req, function (err, isValid){
   				if (err) {
 			      console.log('Error in LTI Launch:' + err);
-			      res.status(403).send(err+" === Error in LTI Launch - 1"+req.body);
-			      
+			      //res.status(403).send(err+" === Error in LTI Launch - 1"+req.body);
+			       res.render('start', { title: 'LTI SETTINGS', CourseID: 'CourseID: '+req.body['context_id'], userID: 'UserID: '+req.body['user_id'], UserRole: 'Course Role: '+req.body['roles'], FulllogTitle: 'Full Log: ', Fulllog: JSON.stringify(req.body) });
+			
   				}
   				else {
 			      if (!isValid) {
