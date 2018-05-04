@@ -54,7 +54,7 @@ var server = https.createServer(app).listen(process.env.PORT || 5000, function()
   console.log("https server started");
 });
 
-var io = require('socket.io').listen(server),
+var io = require('socket.io').listen(server);
 var users = [];
 
 //app.use('/', express.static(__dirname + '/www'));
