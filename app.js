@@ -19,16 +19,47 @@ app.use(bodyParser.json());
 app.set('view engine', 'pug');
 
 app.post('/launch_lti', function(req, res, next){
- 
-  req.body = _.omit(req.body, '__proto__');
+	
+//app.use('/', express.static(__dirname + '/www')); 
+res.sendFile(path.join(__dirname + '/www/index.html'));
+
+					
+/*  req.body = _.omit(req.body, '__proto__');
   	if (req.body['oauth_consumer_key']===ltiKey){
   		var provider = new lti.Provider(ltiKey, ltiSecret);
   	   //Check is the Oauth  is valid.
   			provider.valid_request(req, function (err, isValid){
-
 					
-app.use('/', express.static(__dirname + '/www')); 
+  				if (err) {
+			      console.log('Error in LTI Launch:' + err);
+			      //res.status(403).send(err+" === Error in LTI Launch - 1"+req.body);
+			      //res.render('start', { title: 'LTI SETTINGS', CourseID: 'CourseID: '+req.body['context_id'], userID: 'UserID: '+req.body['user_id'], UserRole: 'Course Role: '+req.body['roles'], FulllogTitle: 'Full Log: ', Fulllog: JSON.stringify(req.body) });
+					
+  				}
+  				else {
+			      if (!isValid) {
+			        console.log('\nError: Invalid LTI launch.');
+			        res.status(500).send({ error: "Invalid LTI launch" });
+			         } 
+			      else {
+		        	  //User is Auth so pass back when ever we need.
+			    	  res.render('start', { title: 'LTI SETTINGS', CourseID: 'CourseID: '+req.body['context_id'], userID: 'UserID: '+req.body['user_id'], UserRole: 'Course Role: '+req.body['roles'], FulllogTitle: 'Full Log: ', Fulllog: JSON.stringify(req.body) });
+			}}
+	   });
+	}
+  else {
+	  console.log('LTI KEY NOT MATCHED:');
+	  res.status(403).send({ error: "LTI KEY NOT MATCHED" });	  
+  } */
 
+});
+
+//Setup the http server
+var server = https.createServer(app).listen(process.env.PORT || 5000, function(){
+  console.log("https server started");
+});
+
+				
 var io = require('socket.io').listen(server);
 var users = [];
 
@@ -64,35 +95,3 @@ io.sockets.on('connection', function(socket) {
         socket.broadcast.emit('newImg', socket.nickname, imgData, color);
     });
 });		
-					
-					
-  				if (err) {
-			      console.log('Error in LTI Launch:' + err);
-			      //res.status(403).send(err+" === Error in LTI Launch - 1"+req.body);
-			      //res.render('start', { title: 'LTI SETTINGS', CourseID: 'CourseID: '+req.body['context_id'], userID: 'UserID: '+req.body['user_id'], UserRole: 'Course Role: '+req.body['roles'], FulllogTitle: 'Full Log: ', Fulllog: JSON.stringify(req.body) });
-					
-  				}
-  				else {
-			      if (!isValid) {
-			        console.log('\nError: Invalid LTI launch.');
-			        res.status(500).send({ error: "Invalid LTI launch" });
-			         } 
-			      else {
-		        	  //User is Auth so pass back when ever we need.
-			    	  res.render('start', { title: 'LTI SETTINGS', CourseID: 'CourseID: '+req.body['context_id'], userID: 'UserID: '+req.body['user_id'], UserRole: 'Course Role: '+req.body['roles'], FulllogTitle: 'Full Log: ', Fulllog: JSON.stringify(req.body) });
-			}}
-	   });
-	}
-  else {
-	  console.log('LTI KEY NOT MATCHED:');
-	  res.status(403).send({ error: "LTI KEY NOT MATCHED" });	  
-  }
-
-});
-
-//Setup the http server
-var server = https.createServer(app).listen(process.env.PORT || 5000, function(){
-  console.log("https server started");
-});
-
-
