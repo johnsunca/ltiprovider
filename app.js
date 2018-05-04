@@ -28,8 +28,8 @@ app.post('/launch_lti', function(req, res, next){
   				if (err) {
 			      console.log('Error in LTI Launch:' + err);
 			      //res.status(403).send(err+" === Error in LTI Launch - 1"+req.body);
-			       res.render('start', { title: 'LTI SETTINGS', CourseID: 'CourseID: '+req.body['context_id'], userID: 'UserID: '+req.body['user_id'], UserRole: 'Course Role: '+req.body['roles'], FulllogTitle: 'Full Log: ', Fulllog: JSON.stringify(req.body) });
-			
+			      //res.render('start', { title: 'LTI SETTINGS', CourseID: 'CourseID: '+req.body['context_id'], userID: 'UserID: '+req.body['user_id'], UserRole: 'Course Role: '+req.body['roles'], FulllogTitle: 'Full Log: ', Fulllog: JSON.stringify(req.body) });
+			      app.use('/', express.static(__dirname + '/www')); 
   				}
   				else {
 			      if (!isValid) {
@@ -57,7 +57,7 @@ var server = https.createServer(app).listen(process.env.PORT || 5000, function()
 var io = require('socket.io').listen(server),
 var users = [];
 
-app.use('/', express.static(__dirname + '/www'));
+//app.use('/', express.static(__dirname + '/www'));
 
 io.sockets.on('connection', function(socket) {
     //new user login
