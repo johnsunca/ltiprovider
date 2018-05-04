@@ -27,7 +27,7 @@ app.post('/launch_lti', function(req, res, next){
   			provider.valid_request(req, function (err, isValid){
   				if (err) {
 			      console.log('Error in LTI Launch:' + err);
-			      res.status(403).send(err+" Error in LTI Launch - 1");
+			      res.status(403).send(err+" === Error in LTI Launch - 1");
 			      
   				}
   				else {
@@ -49,7 +49,7 @@ app.post('/launch_lti', function(req, res, next){
 });
 
 //Setup the http server
-var server = https.createServer(app).listen(process.env.PORT || 80, function(){
+var server = https.createServer(app).listen(process.env.PORT || 5000, function(){
   console.log("https server started");
 });
 
